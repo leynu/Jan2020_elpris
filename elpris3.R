@@ -94,9 +94,7 @@ elpris_wide <- gather(elpris, manad_ar, varde_orig, `apr 2013`:`Nov 2021`) %>%
   select(avtal, Typkund, Elomrade, varde_orig, varde, manad_ar, month_year) %>% 
   filter(Elomrade == "Elområde 3" , 
          !Typkund %in% c("Näringsverksamhet(1)", "Småindustri(1)", "Villa med elvärme"),
-         Typkund == "Lägenhet"#,
-         #Typkund == "Villa utan elvärme"
-         ) %>% 
+         Typkund == "Lägenhet") %>% 
   arrange(Typkund, month_year)
   
 
@@ -109,7 +107,6 @@ data_ends <- elpris_wide %>%
   filter(month_year == last(month_year))
 
 # Some parameters ----
-#my_background <- "white"
 my_background <- "#ECECEC"
 cbbPalette <- c("#ebc845", "#ef6c38","#c02e27", "#113c55", "#3a95ba")
 
@@ -120,14 +117,6 @@ cap_1 <- "<span style = 'font-size:7pt; font-family:Helvetica;'>Ett <b>anvisat p
  du får ett anvisat pris när ditt elavtal har löpt ut och du inte gjort något nytt val. Det anvisade avtalet gäller tillsvidare med <b>14 dagars</b> uppsägningstid. <br> 
        @leynu | Jan 2022 | <i>Källa: SCB</i>
        </span>" 
-
-
-#cap_2 <- "<span align='right'>@leynu | Jan 2022 | <i>Källa: SCB</i></span>"
-
-
-
-
-
 
 # Image ----
 
@@ -148,15 +137,12 @@ p1 <- ggplot(elpris_wide,
        caption = cap_1,
        y="Öre/kWh (exklusive nätavgift)"
        ) +
-  #theme_bw(base_family = "Roboto Condensed") + 
   theme(plot.title.position = "plot",
         plot.margin = margin(0.3, 0.45, 0.2, 0.2, "cm"),
         plot.title = element_text(size = rel(3.1),
                                   face = "bold",
-                                  #=margin(0,0,10,0),
                                   color = "#4D4D4D"),
         plot.subtitle = element_text(size = rel(1),
-                                     #margin=margin(0,0,5,0),
                                      color = "#4D4D4D"),
         plot.caption = ggtext::element_markdown(color = "#4D4D4D",
                                                 hjust=0
@@ -195,9 +181,8 @@ p2 <- ggplot() +
                colour = my_background) +
   geom_text(aes(x = 0.30, y = c(0, 50, 100), 
                 label = c("Årsförbrukning", "Typkund", "Elområde")),
-            #fontface = "bold",
             color = "#4D4D4D", 
-            size = 2.75,
+            size = 3.25,
             hjust = 0.5,
             vjust = 0)+
   geom_text(aes(x = 0.30, y = c(10, 60), 
@@ -214,10 +199,8 @@ p2 <- ggplot() +
             size = 14,
             hjust = 0.5,
             vjust = 0)+
-  #theme_bw(base_family = "Roboto Condensed") + 
   theme(plot.background = element_rect(fill=my_background, 
                                        color=my_background),
-        #plot.background = element_rect(fill = my_background),
         panel.background = element_rect(fill = my_background),
         plot.margin = margin(0, 0.05, 0, 0, "cm"),
         panel.grid.minor=element_blank(), 
